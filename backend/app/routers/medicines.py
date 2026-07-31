@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from app.core.auth import get_current_user
 from app.models.user import User
 
+from app.core.auth import get_current_user, require_admin
+
 from app.database.database import get_db
 from app.schemas.medicine import MedicineCreate , MedicineResponse , MedicineUpdate
 from app.services.medicine_service import (
@@ -70,7 +72,8 @@ def edit_medicine(
 @router.delete("/{medicine_id}")
 def remove_medicine(
     medicine_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_admin)
 ):
     medicine = delete_medicine(db, medicine_id)
 
