@@ -6,10 +6,17 @@ DATABASE_URL = "postgresql://postgres:mediflow123@localhost:5432/mediflow"
 engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(
-    automate = False,
+    autocommit = False,
     autoflush = False,
     bind = engine
 )
 
 Base = declarative_base()
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
