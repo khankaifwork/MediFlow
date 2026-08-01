@@ -9,6 +9,7 @@ from app.models.customer import Customer
 from app.models.supplier import Supplier
 from app.models.purchase import Purchase
 from app.models.sale import Sale
+from app.models.sale_item import SaleItem
 
 # Import routers
 from app.routers.medicines import router as medicines_router
@@ -16,6 +17,7 @@ from app.routers.users import router as users_router
 from app.routers.customers import router as customers_router
 from app.routers.suppliers import router as suppliers_router
 from app.routers.purchases import router as purchases_router
+from app.routers.sales import router as sales_router
 
 app = FastAPI(
     title="MediFlow AI",
@@ -35,6 +37,7 @@ app.include_router(users_router)
 app.include_router(customers_router)
 app.include_router(suppliers_router)
 app.include_router(purchases_router)
+app.include_router(sales_router)
 
 
 @app.get("/")
