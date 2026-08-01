@@ -8,6 +8,7 @@ from app.models.user import User
 from app.models.customer import Customer
 from app.models.supplier import Supplier
 from app.models.purchase import Purchase
+from app.models.sale import Sale
 
 # Import routers
 from app.routers.medicines import router as medicines_router
