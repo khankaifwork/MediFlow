@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from pydantic import BaseModel, ConfigDict
 
 
@@ -11,6 +10,7 @@ class SaleItemCreate(BaseModel):
 class SaleCreate(BaseModel):
     customer_id: int
     payment_method: str
+    discount: float = 0
     items: list[SaleItemCreate]
 
 
