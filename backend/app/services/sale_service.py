@@ -113,11 +113,6 @@ def create_sale(db: Session, sale: SaleCreate):
         item["medicine"].stock -= item["quantity"]
 
     # -------------------------
-    # Loyalty Points
-    # -------------------------
-    customer.loyalty_points += int(grand_total // 100)
-
-    # -------------------------
     # Save Everything
     # -------------------------
     db.commit()
@@ -125,3 +120,6 @@ def create_sale(db: Session, sale: SaleCreate):
     db.refresh(db_sale)
 
     return db_sale
+
+def get_all_sales(db: Session):
+    return db.query(Sale).all()

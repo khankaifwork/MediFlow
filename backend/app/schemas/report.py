@@ -29,3 +29,10 @@ class TopCustomer(BaseModel):
 class RevenueTrend(BaseModel):
     date: date
     revenue: float
+class DashboardReport(BaseModel):
+    total_medicines: int
+    total_customers: int
+    total_suppliers: int
+    total_sales: float
+    total_purchases: float
+    low_stock: int

@@ -34,4 +34,6 @@ class SaleResponse(BaseModel):
     payment_method: str
     sale_date: datetime
 
+    items: list[SaleItemResponse]
+
     model_config = ConfigDict(from_attributes=True)

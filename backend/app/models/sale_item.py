@@ -21,7 +21,7 @@ class SaleItem(Base):
 
     sale = relationship(
         "Sale",
-        back_populates="sale_items"
+        back_populates="items"
     )
 
     medicine = relationship("Medicine")

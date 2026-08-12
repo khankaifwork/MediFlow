@@ -54,3 +54,22 @@ def create_purchase(db: Session, purchase: PurchaseCreate):
     db.refresh(db_purchase)
 
     return db_purchase
+
+def get_all_purchases(db: Session):
+    return db.query(Purchase).all()
+
+
+def get_purchase(db: Session, purchase_id: int):
+    purchase = (
+        db.query(Purchase)
+        .filter(Purchase.id == purchase_id)
+        .first()
+    )
+
+    if purchase is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Purchase not found"
+        )
+
+    return purchase

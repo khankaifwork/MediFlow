@@ -1,32 +1,23 @@
 from datetime import date
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
-class LowStockMedicine(BaseModel):
+class InventoryResponse(BaseModel):
     id: int
     name: str
+    manufacturer: str
+
     stock: int
 
-    model_config = {
-        "from_attributes": True
-    }
+    price: float
 
-
-class ExpiringMedicine(BaseModel):
-    id: int
-    name: str
-    stock: int
     expiry_date: date
 
-    model_config = {
-        "from_attributes": True
-    }
+    prescription_required: bool
 
-class InventorySummary(BaseModel):
-    total_medicines: int
-    total_stock_units: int
-    inventory_value: float
-    low_stock_count: int
-    expiring_count: int
-    expired_count: int
+    status: str
+
+    model_config = ConfigDict(
+        from_attributes=True
+    )

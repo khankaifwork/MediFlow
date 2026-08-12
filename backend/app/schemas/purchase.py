@@ -13,6 +13,16 @@ class PurchaseCreate(BaseModel):
     manufacture_date: date
     expiry_date: date
 
+class PurchaseUpdate(BaseModel):
+    supplier_id: int
+    medicine_id: int
+    quantity: int
+    purchase_price: float
+    selling_price: float
+    batch_number: str
+    manufacture_date: date
+    expiry_date: date
+
 
 class PurchaseResponse(BaseModel):
     id: int

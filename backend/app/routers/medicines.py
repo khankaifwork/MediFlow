@@ -35,7 +35,11 @@ def read_medicines(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    return get_all_medicines(db, skip, limit)
+    return get_all_medicines(
+        db=db,
+        skip=skip,
+        limit=limit,
+    )
 
 @router.get("/search", response_model=list[MedicineResponse])
 def search_medicine(

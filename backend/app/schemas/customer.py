@@ -1,7 +1,14 @@
-from pydantic import BaseModel, EmailStr, ConfigDict
+from pydantic import BaseModel, EmailStr
 
 
 class CustomerCreate(BaseModel):
+    name: str
+    phone: str
+    email: EmailStr | None = None
+    address: str | None = None
+
+
+class CustomerUpdate(BaseModel):
     name: str
     phone: str
     email: EmailStr | None = None
@@ -14,6 +21,7 @@ class CustomerResponse(BaseModel):
     phone: str
     email: EmailStr | None = None
     address: str | None = None
-    loyalty_points: int
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = {
+        "from_attributes": True
+    }

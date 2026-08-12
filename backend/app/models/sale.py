@@ -29,7 +29,7 @@ class Sale(Base):
 
     customer = relationship("Customer")
 
-    sale_items = relationship(
+    items = relationship(
         "SaleItem",
         back_populates="sale",
         cascade="all, delete-orphan"

@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 
-from app.services.ai_business_service import get_business_context
 from app.services.ai_service import ask_ai
+from app.services.context_service import get_context
+from app.services.intent_service import detect_intent
 
 
 def ask_pharmacy_agent(
@@ -9,32 +10,31 @@ def ask_pharmacy_agent(
     db: Session,
 ) -> str:
 
-    context = get_business_context(db)
+    intent = detect_intent(question)
+
+    context = get_context(
+        intent=intent,
+        db=db,
+    )
 
     prompt = f"""
 You are an expert AI pharmacy assistant.
 
-You ONLY answer using the pharmacy data below.
+Intent:
+{intent}
 
-=========================
-PHARMACY DATABASE
-=========================
-
+Available Data:
 {context}
 
-=========================
-USER QUESTION
-=========================
-
+User Question:
 {question}
 
-Instructions:
-
-1. Answer ONLY from the provided data.
+Rules:
+1. Answer ONLY using the provided data.
 2. Never make up numbers.
-3. If information is unavailable, say so.
+3. If the information is unavailable, clearly say so.
 4. Keep the answer professional.
-5. Give recommendations whenever useful.
+5. Give useful recommendations whenever appropriate.
 """
 
     return ask_ai(prompt)

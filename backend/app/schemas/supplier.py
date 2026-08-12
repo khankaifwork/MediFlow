@@ -1,31 +1,45 @@
-from pydantic import BaseModel, EmailStr, ConfigDict
+from pydantic import BaseModel, EmailStr
 
 
 class SupplierCreate(BaseModel):
     supplier_name: str
     company_name: str
-    contact_person: str
+    contact_person: str | None = None
     phone: str
     email: EmailStr | None = None
-    address: str
-    city: str
-    state: str
-    country: str
-    gst_number: str
+    address: str | None = None
+    city: str | None = None
+    state: str | None = None
+    country: str | None = None
+    gst_number: str | None = None
+
+
+class SupplierUpdate(BaseModel):
+    supplier_name: str
+    company_name: str
+    contact_person: str | None = None
+    phone: str
+    email: EmailStr | None = None
+    address: str | None = None
+    city: str | None = None
+    state: str | None = None
+    country: str | None = None
+    gst_number: str | None = None
 
 
 class SupplierResponse(BaseModel):
     id: int
     supplier_name: str
     company_name: str
-    contact_person: str
+    contact_person: str | None = None
     phone: str
     email: EmailStr | None = None
-    address: str
-    city: str
-    state: str
-    country: str
-    gst_number: str
-    is_active: bool
+    address: str | None = None
+    city: str | None = None
+    state: str | None = None
+    country: str | None = None
+    gst_number: str | None = None
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = {
+        "from_attributes": True
+    }

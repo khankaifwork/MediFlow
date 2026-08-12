@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from app.core.auth import get_current_user
 from app.database.database import get_db
 from app.models.user import User
+from app.services.ai_tools import execute_tool
 
 from app.schemas.ai import AIQuestion, AIResponse
 
@@ -72,3 +73,11 @@ def pharmacy_agent(
     return AIResponse(
         answer=answer
     )
+
+
+@router.get("/tool-test")
+def tool_test(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return execute_tool("low_stock", db)
