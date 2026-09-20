@@ -1,7 +1,7 @@
 import api from "./api";
 
 export async function getPurchases() {
-  const response = await api.get("/purchases");
+  const response = await api.get("/purchases/");
   return response.data;
 }
 
@@ -16,7 +16,7 @@ export async function createPurchase(purchase: {
   expiry_date: string;
 }) {
   const response = await api.post(
-    "/purchases",
+    "/purchases/",
     purchase
   );
 

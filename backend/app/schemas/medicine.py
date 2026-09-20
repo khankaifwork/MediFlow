@@ -1,13 +1,12 @@
 from datetime import date
-from decimal import Decimal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class MedicineCreate(BaseModel):
     name: str
     manufacturer: str
-    price: Decimal
+    price: float
     stock: int
     expiry_date: date
     prescription_required: bool = False
@@ -15,7 +14,7 @@ class MedicineCreate(BaseModel):
 class MedicineUpdate(BaseModel):
     name: str
     manufacturer: str
-    price: Decimal
+    price: float
     stock: int
     expiry_date: date
     prescription_required: bool
@@ -24,11 +23,9 @@ class MedicineResponse(BaseModel):
     id: int
     name: str
     manufacturer: str
-    price: Decimal
+    price: float
     stock: int
     expiry_date: date
     prescription_required: bool
 
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = ConfigDict(from_attributes=True)

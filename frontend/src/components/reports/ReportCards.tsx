@@ -9,7 +9,7 @@ export default function ReportCards({ report }: ReportCardsProps) {
   const cards = [
     {
       title: "Gross Sales Revenue",
-      value: `₹${report.total_sales.toFixed(2)}`,
+      value: `₹${Number(report.total_sales || 0).toFixed(2)}`,
       subtitle: "Total billed revenue to date",
       icon: DollarSign,
       color: "text-emerald-600",
@@ -18,7 +18,7 @@ export default function ReportCards({ report }: ReportCardsProps) {
     },
     {
       title: "Drug Procurement Cost",
-      value: `₹${report.total_purchases.toFixed(2)}`,
+      value: `₹${Number(report.total_purchases || 0).toFixed(2)}`,
       subtitle: "Inventory acquisition outlay",
       icon: ShoppingCart,
       color: "text-blue-600",

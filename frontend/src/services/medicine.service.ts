@@ -2,7 +2,7 @@ import api from "./api";
 import type { Medicine, MedicineCreate, MedicineUpdate } from "../types/medicine";
 
 export async function getMedicines(skip: number = 0, limit: number = 20): Promise<Medicine[]> {
-  const response = await api.get<Medicine[]>(`/medicines?skip=${skip}&limit=${limit}`);
+  const response = await api.get<Medicine[]>(`/medicines/?skip=${skip}&limit=${limit}`);
   return response.data;
 }
 
@@ -12,7 +12,7 @@ export async function getMedicine(id: number): Promise<Medicine> {
 }
 
 export async function createMedicine(data: MedicineCreate): Promise<Medicine> {
-  const response = await api.post<Medicine>("/medicines", data);
+  const response = await api.post<Medicine>("/medicines/", data);
   return response.data;
 }
 

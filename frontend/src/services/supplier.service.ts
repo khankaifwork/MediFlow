@@ -3,7 +3,7 @@ import api from "./api";
 import type { Supplier } from "../types/supplier";
 
 export async function getSuppliers() {
-  const response = await api.get("/suppliers");
+  const response = await api.get("/suppliers/");
   return response.data;
 }
 
@@ -16,7 +16,7 @@ export async function createSupplier(
   supplier: Omit<Supplier, "id">
 ) {
   const response = await api.post(
-    "/suppliers",
+    "/suppliers/",
     supplier
   );
 

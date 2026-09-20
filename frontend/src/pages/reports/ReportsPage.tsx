@@ -172,7 +172,7 @@ export default function ReportsPage() {
                             {c.total_orders} orders
                           </td>
                           <td className="px-5 py-3.5 text-right font-bold text-teal-700">
-                            ₹{c.total_spent.toFixed(2)}
+                            ₹{Number(c.total_spent || 0).toFixed(2)}
                           </td>
                         </tr>
                       ))

@@ -1,7 +1,7 @@
 import api from "./api";
 
 export async function getCustomers() {
-  const response = await api.get("/customers");
+  const response = await api.get("/customers/");
   return response.data;
 }
 
@@ -16,7 +16,7 @@ export async function createCustomer(customer: {
   email: string;
   address: string;
 }) {
-  const response = await api.post("/customers", customer);
+  const response = await api.post("/customers/", customer);
   return response.data;
 }
 

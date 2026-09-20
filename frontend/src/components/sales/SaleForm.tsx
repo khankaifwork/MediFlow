@@ -131,7 +131,7 @@ export default function SaleForm({ onSaleAdded }: SaleFormProps) {
 
   // Calculations
   const subtotal = cart.reduce(
-    (sum, item) => sum + item.medicine.price * item.quantity,
+    (sum, item) => sum + Number(item.medicine.price || 0) * item.quantity,
     0
   );
   const tax = subtotal * 0.18; // 18% GST
@@ -248,7 +248,7 @@ export default function SaleForm({ onSaleAdded }: SaleFormProps) {
                 <option value="">Choose medicine from inventory...</option>
                 {medicines.map((m) => (
                   <option key={m.id} value={m.id} disabled={m.stock <= 0}>
-                    {m.name} — ₹{m.price.toFixed(2)} (Stock: {m.stock}{" "}
+                    {m.name} — ₹{Number(m.price || 0).toFixed(2)} (Stock: {m.stock}{" "}
                     {m.stock <= 10 ? "⚠️ LOW" : ""})
                   </option>
                 ))}
@@ -301,7 +301,7 @@ export default function SaleForm({ onSaleAdded }: SaleFormProps) {
                     </td>
 
                     <td className="px-5 py-3.5 text-center font-medium text-slate-600">
-                      ₹{item.medicine.price.toFixed(2)}
+                      ₹{Number(item.medicine.price || 0).toFixed(2)}
                     </td>
 
                     <td className="px-5 py-3.5 text-center">
@@ -327,7 +327,7 @@ export default function SaleForm({ onSaleAdded }: SaleFormProps) {
                     </td>
 
                     <td className="px-5 py-3.5 text-right font-bold text-slate-900">
-                      ₹{(item.medicine.price * item.quantity).toFixed(2)}
+                      ₹{(Number(item.medicine.price || 0) * item.quantity).toFixed(2)}
                     </td>
 
                     <td className="px-5 py-3.5 text-center">
@@ -483,19 +483,19 @@ export default function SaleForm({ onSaleAdded }: SaleFormProps) {
             <div className="rounded-xl bg-slate-50 p-3 my-2 text-xs space-y-1">
               <div className="flex justify-between text-slate-600 pb-1 border-b border-slate-200/60 font-semibold">
                 <span>Subtotal</span>
-                <span>₹{completedSale.subtotal.toFixed(2)}</span>
+                <span>₹{Number(completedSale.subtotal || 0).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-slate-600">
                 <span>GST (18%)</span>
-                <span>₹{completedSale.tax.toFixed(2)}</span>
+                <span>₹{Number(completedSale.tax || 0).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-slate-600">
                 <span>Discount</span>
-                <span>₹{completedSale.discount.toFixed(2)}</span>
+                <span>₹{Number(completedSale.discount || 0).toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-slate-900 font-bold text-sm pt-1 border-t border-slate-200">
                 <span>Grand Total Paid</span>
-                <span className="text-teal-600">₹{completedSale.grand_total.toFixed(2)}</span>
+                <span className="text-teal-600">₹{Number(completedSale.grand_total || 0).toFixed(2)}</span>
               </div>
             </div>
 

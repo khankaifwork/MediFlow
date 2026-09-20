@@ -1,7 +1,7 @@
 import api from "./api";
 
 export async function getSales() {
-  const response = await api.get("/sales");
+  const response = await api.get("/sales/");
   return response.data;
 }
 
@@ -14,6 +14,6 @@ export async function createSale(sale: {
     quantity: number;
   }[];
 }) {
-  const response = await api.post("/sales", sale);
+  const response = await api.post("/sales/", sale);
   return response.data;
 }

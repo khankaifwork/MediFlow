@@ -9,8 +9,9 @@ type SaleTableProps = {
 export default function SaleTable({ sales }: SaleTableProps) {
   const [search, setSearch] = useState("");
 
-  const filteredSales = sales.filter((sale) =>
-    sale.invoice_number.toLowerCase().includes(search.toLowerCase())
+  const salesList = Array.isArray(sales) ? sales : [];
+  const filteredSales = salesList.filter((sale) =>
+    (sale?.invoice_number || "").toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -83,16 +84,18 @@ export default function SaleTable({ sales }: SaleTableProps) {
                   <td className="px-5 py-3.5 text-center text-xs text-slate-500">
                     <span className="inline-flex items-center gap-1">
                       <Calendar className="h-3 w-3 text-slate-400" />
-                      {new Date(sale.sale_date).toLocaleDateString([], {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
+                      {sale.sale_date
+                        ? new Date(sale.sale_date).toLocaleDateString([], {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })
+                        : "N/A"}
                     </span>
                   </td>
 
                   <td className="px-5 py-3.5 text-right font-bold text-slate-900">
-                    ₹{Number(sale.grand_total).toFixed(2)}
+                    ₹{Number(sale.grand_total || 0).toFixed(2)}
                   </td>
                 </tr>
               ))

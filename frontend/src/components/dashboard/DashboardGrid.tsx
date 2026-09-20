@@ -24,7 +24,7 @@ export default function DashboardGrid({ dashboard }: DashboardGridProps) {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
       <StatCard
         title="Today's Revenue"
-        value={`₹${dashboard.today_sales.toFixed(2)}`}
+        value={`₹${Number(dashboard.today_sales || 0).toFixed(2)}`}
         subtitle="Gross daily billing"
         trend="+14% vs avg"
         icon={Receipt}
@@ -35,7 +35,7 @@ export default function DashboardGrid({ dashboard }: DashboardGridProps) {
 
       <StatCard
         title="Monthly Revenue"
-        value={`₹${dashboard.monthly_sales.toFixed(2)}`}
+        value={`₹${Number(dashboard.monthly_sales || 0).toFixed(2)}`}
         subtitle="Current month to date"
         trend="On target"
         icon={TrendingUp}
