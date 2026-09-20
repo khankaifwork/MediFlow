@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import MedicinesPage from "../pages/medicines/MedicinesPage";
 import CustomersPage from "../pages/customers/CustomersPage";
@@ -10,24 +11,90 @@ import ReportsPage from "../pages/reports/ReportsPage";
 import AIPage from "../pages/ai/AIPage";
 import LoginPage from "../pages/auth/LoginPage";
 
-function AppRouter() {
+export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Authentication Route */}
         <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/" element={<DashboardPage />} />
-        <Route path="/medicines" element={<MedicinesPage />} />
-        <Route path="/customers" element={<CustomersPage />} />
-        <Route path="/suppliers" element={<SuppliersPage />} />
-        <Route path="/purchases" element={<PurchasesPage />} />
-        <Route path="/sales" element={<SalesPage />} />
-        <Route path="/inventory" element={<InventoryPage />} />
-        <Route path="/reports" element={<ReportsPage />} />
-        <Route path="/ai" element={<AIPage />} />
+        {/* Protected Operational Routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/medicines"
+          element={
+            <ProtectedRoute>
+              <MedicinesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/customers"
+          element={
+            <ProtectedRoute>
+              <CustomersPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/suppliers"
+          element={
+            <ProtectedRoute>
+              <SuppliersPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/purchases"
+          element={
+            <ProtectedRoute>
+              <PurchasesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sales"
+          element={
+            <ProtectedRoute>
+              <SalesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/inventory"
+          element={
+            <ProtectedRoute>
+              <InventoryPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <ReportsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ai"
+          element={
+            <ProtectedRoute>
+              <AIPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Fallback Catch-All Route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default AppRouter;

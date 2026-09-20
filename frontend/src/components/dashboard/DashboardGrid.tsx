@@ -1,11 +1,10 @@
 import {
   Pill,
   Users,
-  TriangleAlert,
+  AlertTriangle,
   Receipt,
-  IndianRupee,
+  TrendingUp,
 } from "lucide-react";
-
 import StatCard from "./StatCard";
 
 type DashboardData = {
@@ -20,45 +19,61 @@ type DashboardGridProps = {
   dashboard: DashboardData;
 };
 
-function DashboardGrid({ dashboard }: DashboardGridProps) {
+export default function DashboardGrid({ dashboard }: DashboardGridProps) {
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-5">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
       <StatCard
-        title="Medicines"
-        value={dashboard.total_medicines}
-        icon={Pill}
-        color="bg-blue-500"
-      />
-
-      <StatCard
-        title="Customers"
-        value={dashboard.total_customers}
-        icon={Users}
-        color="bg-green-500"
-      />
-
-      <StatCard
-        title="Low Stock"
-        value={dashboard.low_stock}
-        icon={TriangleAlert}
-        color="bg-red-500"
-      />
-
-      <StatCard
-        title="Today's Sales"
-        value={`₹${dashboard.today_sales}`}
+        title="Today's Revenue"
+        value={`₹${dashboard.today_sales.toFixed(2)}`}
+        subtitle="Gross daily billing"
+        trend="+14% vs avg"
         icon={Receipt}
-        color="bg-orange-500"
+        colorClass="text-emerald-600"
+        bgClass="bg-emerald-50"
+        borderClass="border-emerald-200/60"
       />
 
       <StatCard
-        title="Monthly Sales"
-        value={`₹${dashboard.monthly_sales}`}
-        icon={IndianRupee}
-        color="bg-emerald-500"
+        title="Monthly Revenue"
+        value={`₹${dashboard.monthly_sales.toFixed(2)}`}
+        subtitle="Current month to date"
+        trend="On target"
+        icon={TrendingUp}
+        colorClass="text-teal-600"
+        bgClass="bg-teal-50"
+        borderClass="border-teal-200/60"
+      />
+
+      <StatCard
+        title="Total Medicines"
+        value={dashboard.total_medicines}
+        subtitle="Formulary items"
+        icon={Pill}
+        colorClass="text-blue-600"
+        bgClass="bg-blue-50"
+        borderClass="border-blue-200/60"
+      />
+
+      <StatCard
+        title="Patient Customers"
+        value={dashboard.total_customers}
+        subtitle="Active patient accounts"
+        icon={Users}
+        colorClass="text-purple-600"
+        bgClass="bg-purple-50"
+        borderClass="border-purple-200/60"
+      />
+
+      <StatCard
+        title="Low Stock Warning"
+        value={dashboard.low_stock}
+        subtitle={dashboard.low_stock > 0 ? "Urgent reorder needed" : "Inventory healthy"}
+        trend={dashboard.low_stock > 0 ? "Action Required" : "Optimal"}
+        icon={AlertTriangle}
+        colorClass={dashboard.low_stock > 0 ? "text-red-600" : "text-slate-400"}
+        bgClass={dashboard.low_stock > 0 ? "bg-red-50" : "bg-slate-50"}
+        borderClass={dashboard.low_stock > 0 ? "border-red-200/80" : "border-slate-200/60"}
       />
     </div>
   );
 }
-
-export default DashboardGrid;

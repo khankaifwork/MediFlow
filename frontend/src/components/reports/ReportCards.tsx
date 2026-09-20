@@ -1,58 +1,84 @@
 import type { DashboardReport } from "../../types/report";
+import { DollarSign, ShoppingCart, Pill, Users, AlertTriangle } from "lucide-react";
 
 type ReportCardsProps = {
   report: DashboardReport;
 };
 
-function ReportCards({
-  report,
-}: ReportCardsProps) {
+export default function ReportCards({ report }: ReportCardsProps) {
   const cards = [
     {
-      title: "Revenue",
+      title: "Gross Sales Revenue",
       value: `₹${report.total_sales.toFixed(2)}`,
-      color: "bg-green-600",
+      subtitle: "Total billed revenue to date",
+      icon: DollarSign,
+      color: "text-emerald-600",
+      bg: "bg-emerald-50",
+      border: "border-emerald-200/60",
     },
     {
-      title: "Purchases",
+      title: "Drug Procurement Cost",
       value: `₹${report.total_purchases.toFixed(2)}`,
-      color: "bg-blue-600",
+      subtitle: "Inventory acquisition outlay",
+      icon: ShoppingCart,
+      color: "text-blue-600",
+      bg: "bg-blue-50",
+      border: "border-blue-200/60",
     },
     {
-      title: "Medicines",
+      title: "Catalog Medicines",
       value: report.total_medicines,
-      color: "bg-purple-600",
+      subtitle: "Unique pharmaceuticals",
+      icon: Pill,
+      color: "text-purple-600",
+      bg: "bg-purple-50",
+      border: "border-purple-200/60",
     },
     {
-      title: "Customers",
+      title: "Patient Customers",
       value: report.total_customers,
-      color: "bg-orange-600",
+      subtitle: "Registered profiles",
+      icon: Users,
+      color: "text-amber-600",
+      bg: "bg-amber-50",
+      border: "border-amber-200/60",
     },
     {
-      title: "Low Stock",
+      title: "Low Stock Warnings",
       value: report.low_stock,
-      color: "bg-red-600",
+      subtitle: "Items below reorder limit",
+      icon: AlertTriangle,
+      color: "text-red-600",
+      bg: "bg-red-50",
+      border: "border-red-200/60",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-5">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
       {cards.map((card) => (
         <div
           key={card.title}
-          className={`${card.color} rounded-2xl p-6 text-white shadow`}
+          className={`rounded-3xl border ${card.border} bg-white p-5 shadow-sm transition hover:shadow-md`}
         >
-          <h3 className="text-lg font-medium">
-            {card.title}
-          </h3>
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              {card.title}
+            </span>
+            <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${card.bg} ${card.color}`}>
+              <card.icon className="h-4 w-4" />
+            </div>
+          </div>
 
-          <p className="mt-3 text-3xl font-bold">
+          <p className="mt-4 text-2xl font-extrabold text-slate-900 tracking-tight">
             {card.value}
+          </p>
+
+          <p className="mt-1 text-[11px] text-slate-400">
+            {card.subtitle}
           </p>
         </div>
       ))}
     </div>
   );
 }
-
-export default ReportCards;

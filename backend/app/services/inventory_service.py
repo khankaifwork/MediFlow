@@ -1,29 +1,20 @@
 from datetime import date
-
 from sqlalchemy.orm import Session
-
 from app.models.medicine import Medicine
 
 
 def get_inventory(db: Session):
-
     medicines = db.query(Medicine).all()
-
     inventory = []
-
     today = date.today()
 
     for medicine in medicines:
-
-        if medicine.stock == 0:
+        if medicine.expiry_date <= today:
+            status = "Expired"
+        elif medicine.stock == 0:
             status = "Out of Stock"
-
         elif medicine.stock <= 10:
             status = "Low Stock"
-
-        elif medicine.expiry_date <= today:
-            status = "Expired"
-
         else:
             status = "Healthy"
 
@@ -41,3 +32,28 @@ def get_inventory(db: Session):
         )
 
     return inventory
+
+
+def get_low_stock(db: Session, threshold: int = 10):
+    """
+    Returns medicines with stock quantity less than or equal to threshold.
+    """
+    medicines = (
+        db.query(Medicine)
+        .filter(Medicine.stock <= threshold)
+        .order_by(Medicine.stock.asc())
+        .all()
+    )
+
+    return [
+        {
+            "id": med.id,
+            "name": med.name,
+            "manufacturer": med.manufacturer,
+            "stock": med.stock,
+            "price": float(med.price),
+            "expiry_date": str(med.expiry_date),
+            "prescription_required": med.prescription_required,
+        }
+        for med in medicines
+    ]

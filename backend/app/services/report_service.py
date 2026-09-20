@@ -134,9 +134,7 @@ def get_top_customers(db: Session):
 
 
 def get_revenue_trend(db: Session):
-
     today = date.today()
-
     start_date = today - timedelta(days=6)
 
     results = (
@@ -150,13 +148,19 @@ def get_revenue_trend(db: Session):
         .all()
     )
 
-    return [
-        {
-            "date": row.date,
-            "revenue": float(row.revenue),
-        }
-        for row in results
-    ]
+    revenue_by_date = {str(row.date): float(row.revenue) for row in results}
+
+    # Generate full 7-day series
+    trend = []
+    for i in range(6, -1, -1):
+        day = today - timedelta(days=i)
+        day_str = str(day)
+        trend.append({
+            "date": day.strftime("%b %d"),
+            "revenue": revenue_by_date.get(day_str, 0.0),
+        })
+
+    return trend
 
 
 def get_dashboard_report(db: Session):
