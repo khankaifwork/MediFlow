@@ -1,6 +1,11 @@
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+const defaultHost =
+  typeof window !== "undefined" && window.location.hostname
+    ? window.location.hostname
+    : "localhost";
+
+const baseURL = import.meta.env.VITE_API_BASE_URL || `http://${defaultHost}:8000`;
 
 const api = axios.create({
   baseURL,
@@ -23,8 +28,9 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem("access_token");
-      if (window.location.pathname !== "/login") {
+      // Clear token on 401 only if not already on the login page
+      if (typeof window !== "undefined" && window.location.pathname !== "/login") {
+        localStorage.removeItem("access_token");
         window.location.href = "/login";
       }
     }

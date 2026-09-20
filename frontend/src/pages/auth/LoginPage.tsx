@@ -40,12 +40,19 @@ export default function LoginPage() {
       await loginUser(data.access_token);
       toast.success("Welcome back to MediFlow!");
       navigate(from, { replace: true });
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      toast.error("Invalid credentials. Please verify username and password.");
+      const err = error as { response?: { data?: { detail?: string } }; message?: string };
+      const message =
+        err.response?.data?.detail ||
+        (err.message === "Network Error"
+          ? "Network Error: Could not reach backend server. Please verify it is running on port 8000."
+          : "Invalid credentials. Please verify username and password.");
+      toast.error(message);
     } finally {
       setLoading(false);
     }
+
   }
 
   function fillDemo(userRole: "admin" | "pharmacist") {

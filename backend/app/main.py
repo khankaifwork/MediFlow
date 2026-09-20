@@ -48,10 +48,12 @@ origins = [origin.strip() for origin in origins_str.split(",") if origin.strip()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Register all API routers
 app.include_router(users_router)
